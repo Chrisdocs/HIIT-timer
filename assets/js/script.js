@@ -1,28 +1,44 @@
-let DateTime = luxon.DateTime;
+var restTime = true;
 
-var dtfull = DateTime.fromObject({zone: 'America/Los_Angeles', numberingSystem: 'beng'})
-var dt = DateTime.now();
-var interval15 = 15;
-var interval30 = 3;
-var interval60 = 60;
+var goInterval = 30; // 30 seconds
+var restInterval = 10; //10 seconds
+var interval = 1000; //miliseconds
+var timerIsOn = 0;
+
 var timerDisplay = document.getElementById("timer");
-console.log(timerDisplay);
+var startBtn = document.getElementById("startStopTimer");
+var resetBtn = document.getElementById("reset")
 
 
-// var timerBtn = document.querySelector("#startStopTimer").addEventListener("click", function countdown(){
-//     setInterval(() => {
-//         timerDisplay.textContent = "0:" + interval30;
-//         interval30--;
-//     }, 1000);
+timerDisplay.textContent = goInterval
+function updateTimer() {
+    timerDisplay.textContent = goInterval;
+}
 
-// });
+function startTimer(){
+    goInterval = 30;
+    var start = setInterval(function(){
+        goInterval--
+        updateTimer();
+        if (goInterval === 0) {
+            clearInterval(start);
+            restTimer();
+        };
+    }, 1000)
+};
+    
+function restTimer() {
+    goInterval = 10;
+    var rest = setInterval(function(){
+        goInterval--
+        updateTimer();
+        if (goInterval === 0) {
+            clearInterval(rest);
+            startTimer();
+        };
+    }, 1000)
+};
 
-var timerBtn = document.querySelector("#startStopTimer").addEventListener("click", function countdown(){
-var timeInterval = setInterval(function set() {
-    timerDisplay.textContent = "0:" + interval30;
-    interval30--;
-    if(interval30 < 0) {
-        clearInterval(timeInterval);
-    }
-    }, 1000);
-});
+
+
+
